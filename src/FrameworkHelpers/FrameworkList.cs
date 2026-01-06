@@ -1,0 +1,16 @@
+﻿using System.Text;
+
+namespace FrameworkHelpers;
+
+public class FrameworkList<T> : List<T>
+{
+    public override string ToString()
+    {
+        StringBuilder s = new();
+        foreach (var element in this)
+        {
+            s.Append(element?.ToString() + Environment.NewLine);
+        }
+        return s.ToString();
+    }
+}
