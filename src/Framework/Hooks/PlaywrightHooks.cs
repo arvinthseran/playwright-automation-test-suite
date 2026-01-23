@@ -59,6 +59,8 @@ public class PlaywrightHooks(ScenarioContext context)
             };
         }
 
+        contextOptions.Permissions = new[] { "notifications" };
+
         browserContext = await Browser.NewContextAsync(new BrowserNewContextOptions(contextOptions));
 
         if (ShouldTrace())

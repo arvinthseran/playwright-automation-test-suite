@@ -1,0 +1,7 @@
+﻿Feature: FindAPret_02
+
+@findapret
+@regression
+Scenario: Find a pret using postcode
+	Given the user navigates to Home page 
+	Then the user can find a pret near SW1E
