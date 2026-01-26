@@ -1,4 +1,5 @@
 ﻿using Framework;
+using Microsoft.Playwright;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
