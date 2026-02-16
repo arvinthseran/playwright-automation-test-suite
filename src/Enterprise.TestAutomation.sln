@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apcoa.UITests", "Apcoa.UITe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pret.UITests", "Pret.UITests\Pret.UITests.csproj", "{2CAAD4C9-0622-4129-942A-9AA3A4AA1A2B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkillsEngland.UITests", "SkillsEngland.UITests\SkillsEngland.UITests.csproj", "{F487114B-332E-4D32-B947-D6D54E5B7B85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{2CAAD4C9-0622-4129-942A-9AA3A4AA1A2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CAAD4C9-0622-4129-942A-9AA3A4AA1A2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CAAD4C9-0622-4129-942A-9AA3A4AA1A2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F487114B-332E-4D32-B947-D6D54E5B7B85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F487114B-332E-4D32-B947-D6D54E5B7B85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F487114B-332E-4D32-B947-D6D54E5B7B85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F487114B-332E-4D32-B947-D6D54E5B7B85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
