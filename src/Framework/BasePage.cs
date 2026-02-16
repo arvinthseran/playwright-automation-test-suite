@@ -34,6 +34,17 @@ public abstract class BasePage
 
     protected bool IsMobile => context.ScenarioInfo.Tags.Contains("mobileapp");
 
+    protected static async Task<IReadOnlyList<string>> AllTextAsync(ILocator locator)
+    {
+        var locators = await locator.AllAsync();
+
+        var alloptions = locators.Select(async l => await l.TextContentAsync());
+
+        var alloptionstexts = await Task.WhenAll(alloptions);
+
+        return alloptionstexts;
+    }
+
     public async Task<T> VerifyPageAsync<T>(Func<T> func) where T : BasePage
     {
         var nextPage = func.Invoke();
