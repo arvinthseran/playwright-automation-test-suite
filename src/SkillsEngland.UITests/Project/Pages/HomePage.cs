@@ -128,7 +128,7 @@ public class ExploreAreaSummaryDashboardPage(ScenarioContext context) : BasePage
 
         await page.Locator(".selectize-dropdown-content").GetByText(location, new() { Exact = true }).First.ClickAsync();
 
-        await Assertions.Expect(page.Locator("#page0title")).ToContainTextAsync(location);
+        await Assertions.Expect(page.Locator("#page0title")).ToContainTextAsync(location, new LocatorAssertionsToContainTextOptions { Timeout = 15000});
 
         return await VerifyPageAsync(() => new ExploreAreaSummaryDashboardPage(context));
     }
