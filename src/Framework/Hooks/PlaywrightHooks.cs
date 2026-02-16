@@ -36,9 +36,27 @@ public class PlaywrightHooks(ScenarioContext context)
             });
     }
 
+    [AfterTestRun]
+    public static async Task AfterAll()
+    {
+        await Browser.CloseAsync();
+    }
+
     [BeforeScenario(Order = 8)]
     public async Task SetupPlaywrightDriver()
     {
+        isCloud = InitializeDriver.isCloud;
+
+        if (isCloud)
+            Browser = await driver.IBrowserType.ConnectAsync(CreateCloudDriver());
+
+        else
+            Browser = await driver.IBrowserType.LaunchAsync(new BrowserTypeLaunchOptions
+            {
+                Headless = false,
+                Args = ["--start-maximized"],
+            });
+
         BrowserNewContextOptions contextOptions;
 
         if (context.ScenarioInfo.Tags.Contains("mobileapp"))
@@ -110,7 +128,7 @@ public class PlaywrightHooks(ScenarioContext context)
                 await MarkTestStatus("failed", context.TestError.Message, pDriver.Page);
         }
 
-        await Browser.CloseAsync();
+        await browserContext.CloseAsync();
     }
 
     public static async Task MarkTestStatus(string status, string reason, IPage page)
