@@ -7,9 +7,9 @@ public class PlaywrightHooks(ScenarioContext context)
 
     private IBrowserContext browserContext;
 
-    private IBrowser Browser;
+    private static IBrowser Browser;
 
-    private bool isCloud;
+    private static bool isCloud;
 
     private static readonly DateTime Date;
 
@@ -19,16 +19,10 @@ public class PlaywrightHooks(ScenarioContext context)
     }
 
     [BeforeTestRun]
-    public static Task BeforeAll()
+    public static async Task BeforeAll()
     {
         driver = new InitializeDriver();
 
-        return Task.CompletedTask;
-    }
-
-    [BeforeScenario(Order = 8)]
-    public async Task SetupPlaywrightDriver()
-    {
         isCloud = InitializeDriver.isCloud;
 
         if (isCloud)
@@ -40,7 +34,11 @@ public class PlaywrightHooks(ScenarioContext context)
                 Headless = false,
                 Args = ["--start-maximized"],
             });
+    }
 
+    [BeforeScenario(Order = 8)]
+    public async Task SetupPlaywrightDriver()
+    {
         BrowserNewContextOptions contextOptions;
 
         if (context.ScenarioInfo.Tags.Contains("mobileapp"))
@@ -122,7 +120,7 @@ public class PlaywrightHooks(ScenarioContext context)
 
     private bool ShouldTrace() => context.ScenarioInfo.Tags.Contains("donottracelogin") == false || isCloud == false;
 
-    private string CreateCloudDriver()
+    private static string CreateCloudDriver()
     {
         string varbrowserstackusername = Environment.GetEnvironmentVariable("BROWSERSTACKUSER");
 
@@ -141,7 +139,7 @@ public class PlaywrightHooks(ScenarioContext context)
             { "geoLocation", "FR" },
             { "project", "Playwright Campaingns project" },
             { "build", buildDateTime },
-            { "name", context.ScenarioInfo.Title },
+            { "name", "context.ScenarioInfo.Title" },
             { "buildTag", "playwright" },
             { "resolution", "1280x1024" },
             { "browserstack.local", "false" },
