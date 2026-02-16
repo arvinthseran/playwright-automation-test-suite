@@ -42,6 +42,13 @@ public class ExploreLocalSkillsAndEmploymentDashboardPage(ScenarioContext contex
         CollectionAssert.Contains(texts, "Explore local skills and employment data.");
     }
 
+    public async Task<ExploreAreaSummaryDashboardPage> GoToAreaSummary()
+    {
+        await page.GetByRole(AriaRole.Button, new() { Name = "Go to area summary" }).ClickAsync();
+
+        return await VerifyPageAsync(() => new ExploreAreaSummaryDashboardPage(context));
+    }
+
     public async Task<ExploreLocalSkillsDashboardPage> ExploreLocalSkillsDashboard()
     {
         await page.GetByRole(AriaRole.Button, new() { Name = "Explore local skills data" }).ClickAsync();
@@ -92,5 +99,37 @@ public class ExploreLocalSkillsDashboardPage(ScenarioContext context) : BasePage
         await page.GetByRole(AriaRole.Listbox).GetByText(interest, new() { Exact = true }).ClickAsync();
 
         return await VerifyPageAsync(() => new ExploreLocalSkillsDashboardPage(context));
+    }
+}
+
+public class ExploreAreaSummaryDashboardPage(ScenarioContext context) : BasePage(context)
+{
+    public override async Task VerifyPage()
+    {
+        await Assertions.Expect(page.Locator("#page0title")).ToContainTextAsync("headline data");
+    }
+
+    public async Task VerifyMapData(string location)
+    {
+        await SelectLocation(location);
+
+        var data = await page.Locator("#overviewEmpRateKPI").Filter(new LocatorFilterOptions { HasTextRegex = new Regex("[0-9]?[0-9]%") }).TextContentAsync();
+
+        objectContext.SetDebugInformation($"{location} - {data}");
+
+        await Assertions.Expect(page.Locator("#overviewEmpRateKPI")).ToContainTextAsync(new Regex("[0-9]?[0-9]%"));
+    }
+
+    private async Task<ExploreAreaSummaryDashboardPage> SelectLocation(string location)
+    {
+        await page.Locator(".tab-pane.active div.selectize-input").ClickAsync();
+
+        await page.Locator("#geoChoiceOver-selectized").FillAsync(location);
+
+        await page.Locator(".selectize-dropdown-content").GetByText(location, new() { Exact = true }).First.ClickAsync();
+
+        await Assertions.Expect(page.Locator("#page0title")).ToContainTextAsync(location);
+
+        return await VerifyPageAsync(() => new ExploreAreaSummaryDashboardPage(context));
     }
 }

@@ -1,6 +1,6 @@
 ﻿Feature: LocalSkillDashboard
 
-@findapret
+@localskilldashboard
 @regression
 Scenario: LocalSkillDashboard
 	Given the user navigates to local skills page

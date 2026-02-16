@@ -5,7 +5,7 @@ using TechTalk.SpecFlow;
 namespace SkillsEngland.UITests.Project.Steps;
 
 [Binding]
-public class FindAPretSteps(ScenarioContext context)
+public class LocalSkillsDashboardSteps(ScenarioContext context)
 {
     private ExploreLocalSkillsDashboardPage exploreLocalSkillsDashboardPage;
 
