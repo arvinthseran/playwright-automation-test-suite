@@ -1,8 +1,10 @@
-﻿Feature: HS2 Home Page Navigation
+﻿Feature: HS2 Home Page Navigation in Andriod
 
 @hs2
 @regression
-Scenario: Hs2HomePageNavigation
+@mobileapp
+@andriod
+Scenario: Hs2HomePageNavigation_Andriod
 	Given the user navigates to HS2 home page
 	Then the user can navigate to What is HS2 page
 	Then the user can navigate to Route map page

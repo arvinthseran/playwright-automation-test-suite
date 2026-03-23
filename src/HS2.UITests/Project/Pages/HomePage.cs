@@ -136,6 +136,8 @@ public class RouteMapPage(ScenarioContext context) : HS2BasePage(context)
 
     public override async Task<HomePage> GoToHomePage()
     {
+        await page.GetByRole(AriaRole.Button, new() { Name = "Menu" }).ClickAsync();
+
         await page.GetByRole(AriaRole.Link, new() { Name = "Back to main website" }).ClickAsync();
 
         return await VerifyPageAsync(() => new HomePage(context));
