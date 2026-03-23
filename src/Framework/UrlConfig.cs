@@ -8,5 +8,9 @@ public static class UrlConfig
 
     public static string SkillsEngland_BaseUrl => "https://www.gov.uk/government/organisations/skills-england";
 
+    public static string Hs2_BaseUrl => "https://www.hs2.org.uk/";
+
 }
+
+
 
