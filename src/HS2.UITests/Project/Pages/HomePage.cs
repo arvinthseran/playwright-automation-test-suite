@@ -24,14 +24,7 @@ public class HomePage(ScenarioContext context) : HS2BasePage(context)
 
     public async Task<WhatIsHs2Page> GoToWhatIsHs2Page()
     {
-        if (IsMobile)
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "Menu" }).ClickAsync();
-        }
-        else
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "What is HS2" }).ClickAsync();
-        }
+        await ClickMenu("What is HS2");
 
         await page.GetByRole(AriaRole.Link, new() { Name = "What is HS2" }).ClickAsync();
 
@@ -40,14 +33,7 @@ public class HomePage(ScenarioContext context) : HS2BasePage(context)
 
     public async Task<RouteMapPage> GoToRouteMap()
     {
-        if (IsMobile)
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "Menu" }).ClickAsync();
-        }
-        else
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "Route map" }).ClickAsync();
-        }
+        await ClickMenu("Route map");
 
         await page.GetByLabel("Primary").GetByRole(AriaRole.Link, new() { Name = "Route map" }).ClickAsync();
 
@@ -56,14 +42,7 @@ public class HomePage(ScenarioContext context) : HS2BasePage(context)
 
     public async Task<BuildingHs2Page> GoToBuildingHs2page()
     {
-        if (IsMobile)
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "Menu" }).ClickAsync();
-        }
-        else
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "Building HS2" }).ClickAsync();
-        }
+        await ClickMenu("Building HS2");
 
         await page.GetByRole(AriaRole.Link, new() { Name = "Building HS2" }).First.ClickAsync();
 
@@ -72,14 +51,7 @@ public class HomePage(ScenarioContext context) : HS2BasePage(context)
 
     public async Task<SupplyChainPage> GoToSupplyChainpage()
     {
-        if (IsMobile)
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "Menu" }).ClickAsync();
-        }
-        else
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "Supply chain" }).ClickAsync();
-        }
+        await ClickMenu("Supply chain");
 
         await page.GetByRole(AriaRole.Link, new() { Name = "Supply chain", Exact = true }).ClickAsync();
 
@@ -88,14 +60,7 @@ public class HomePage(ScenarioContext context) : HS2BasePage(context)
 
     public async Task<CareersPage> GoToCareerspage()
     {
-        if (IsMobile)
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "Menu" }).ClickAsync();
-        }
-        else
-        {
-            await page.GetByRole(AriaRole.Button, new() { Name = "Careers" }).ClickAsync();
-        }
+        await ClickMenu("Careers");
 
         await page.GetByRole(AriaRole.Link, new() { Name = "Careers", Exact = true }).ClickAsync();
 
@@ -104,18 +69,23 @@ public class HomePage(ScenarioContext context) : HS2BasePage(context)
 
     public async Task<AboutUsPage> GoToAboutUspage()
     {
+        await ClickMenu("About us");
+
+        await page.GetByRole(AriaRole.Link, new() { Name = "About us", Exact = true }).ClickAsync();
+
+        return await VerifyPageAsync(() => new AboutUsPage(context));
+    }
+
+    private async Task ClickMenu(string menuName)
+    {
         if (IsMobile)
         {
             await page.GetByRole(AriaRole.Button, new() { Name = "Menu" }).ClickAsync();
         }
         else
         {
-            await page.GetByRole(AriaRole.Button, new() { Name = "About us" }).ClickAsync();
+            await page.GetByRole(AriaRole.Button, new() { Name = menuName }).ClickAsync();
         }
-
-        await page.GetByRole(AriaRole.Link, new() { Name = "About us", Exact = true }).ClickAsync();
-
-        return await VerifyPageAsync(() => new AboutUsPage(context));
     }
 }
 
@@ -131,12 +101,18 @@ public class RouteMapPage(ScenarioContext context) : HS2BasePage(context)
 {
     public override async Task VerifyPage()
     {
-        await Assertions.Expect(page.Locator("#map-sidebar-intro--default")).ToContainTextAsync("HS2 route map");
+        await Assertions.Expect(page.GetByRole(AriaRole.Button, new() { Name = "Interchange" })).ToBeVisibleAsync();
+
+        await Assertions.Expect(page.GetByRole(AriaRole.Button, new() { Name = "Birmingham Curzon Street" })).ToBeVisibleAsync();
+        
+        await Assertions.Expect(page.GetByRole(AriaRole.Button, new() { Name = "Old Oak Common" })).ToBeVisibleAsync();
+        
+        await Assertions.Expect(page.GetByRole(AriaRole.Button, new() { Name = "London Euston" })).ToBeVisibleAsync();
     }
 
     public override async Task<HomePage> GoToHomePage()
     {
-        await page.GetByRole(AriaRole.Button, new() { Name = "Menu" }).ClickAsync();
+        if (IsMobile) { await page.GetByRole(AriaRole.Button, new() { Name = "Menu" }).ClickAsync(); }
 
         await page.GetByRole(AriaRole.Link, new() { Name = "Back to main website" }).ClickAsync();
 
